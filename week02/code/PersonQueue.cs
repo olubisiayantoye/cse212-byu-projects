@@ -8,25 +8,27 @@ public class PersonQueue
     public int Length => _queue.Count;
 
     /// <summary>
-    /// Add a person to the queue
+    /// Add a person to the back of the queue (FIFO)
     /// </summary>
-    /// <param name="person">The person to add</param>
     public void Enqueue(Person person)
     {
-        _queue.Insert(0, person);
+        _queue.Add(person); // ✅ Correct order
     }
 
+    /// <summary>
+    /// Remove the person at the front of the queue
+    /// </summary>
     public Person Dequeue()
     {
+        if (IsEmpty())
+            throw new InvalidOperationException("Queue is empty.");
+
         var person = _queue[0];
         _queue.RemoveAt(0);
         return person;
     }
 
-    public bool IsEmpty()
-    {
-        return Length == 0;
-    }
+    public bool IsEmpty() => _queue.Count == 0;
 
     public override string ToString()
     {
